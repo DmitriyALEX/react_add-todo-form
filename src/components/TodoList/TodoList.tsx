@@ -1,7 +1,6 @@
 import { TodoInfo } from '../TodoInfo/TodoInfo';
-
+//@ts-ignore
 export const TodoList = ({ dataFromServer }) => {
-  console.log('dataFromServer', dataFromServer);
   return (
     <section className="TodoList">
       {dataFromServer.map(todo => (

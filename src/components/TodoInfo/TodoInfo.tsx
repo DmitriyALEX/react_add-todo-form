@@ -1,6 +1,6 @@
 import { UserInfo } from '../UserInfo/UserInfo';
 import cn from 'classnames';
-
+//@ts-ignore
 export const TodoInfo = ({ todo }) => {
   // console.log('todo', todo);
   return (

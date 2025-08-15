@@ -13,7 +13,7 @@ interface ITodos {
 }
 
 export const App = () => {
-  const visibleData = preperedData(usersFromServer, todosFromServer);
+  // const visibleData = preperedData(usersFromServer, todosFromServer);
   const [dataFromServer, setDataFromServer] =
     useState<ITodos[]>(todosFromServer);
   // console.log('todosFromServer', todosFromServer);
@@ -62,18 +62,18 @@ export const App = () => {
     });
   };
 
-  function preperedData(users: User[], todos: Todo[]): UserWithTodos[] {
-    const unionData = todos.map((todo: Todo) => {
-      return {
-        user: users.find((user: User) => todo.userId === user.id)!,
-        title: todo.title,
-        todoId: todo.id,
-        completed: todo.completed,
-      };
-    });
+  // function preperedData(users: User[], todos: Todo[]): UserWithTodos[] {
+  //   const unionData = todos.map((todo: Todo) => {
+  //     return {
+  //       user: users.find((user: User) => todo.userId === user.id)!,
+  //       title: todo.title,
+  //       todoId: todo.id,
+  //       completed: todo.completed,
+  //     };
+  //   });
 
-    return unionData;
-  }
+  //   return unionData;
+  // }
 
   //action="/api/todos" method="POST"
   return (
