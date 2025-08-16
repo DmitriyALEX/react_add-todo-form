@@ -3,7 +3,7 @@ export interface ITodos {
   title: string;
   userId: number;
   completed: boolean;
-  user?: IUsers[];
+  // user: IUsers[];
 }
 
 export interface IUsers {
@@ -11,6 +11,14 @@ export interface IUsers {
   name: string;
   username: string;
   email: string;
+}
+
+export interface ITodosWithUsers {
+  id: number;
+  title: string;
+  userId: number;
+  completed: boolean;
+  user: IUsers;
 }
 // import { User } from './User';
 

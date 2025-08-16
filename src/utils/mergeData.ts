@@ -1,13 +1,15 @@
-import { ITodos, IUsers } from '../components/types/data';
+import { ITodos, IUsers } from '../components/types/data.interface';
 
-export const mergeData = (users: IUsers, todos: ITodos[]) => {
-  todos.map(todo => {
+export const mergeData = (todosData: ITodos[], usersData: IUsers[]) => {
+  const merged = todosData.map(todo => {
     return {
-      id: Math.max(todos.map(todo => todo.id)) + 1,
-      title: title,
-      completed: false,
-      userId: +selectedUser,
-      user: users.find(x => x.id === +selectedUser),
+      id: todo.id,
+      title: todo.title,
+      userId: todo.userId,
+      completed: todo.completed,
+      user: usersData.find(x => x.id === todo.userId)!,
     };
   });
+
+  return merged;
 };

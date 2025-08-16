@@ -4,26 +4,16 @@ import { TodoList } from './components/TodoList/TodoList';
 import usersFromServer from './api/users';
 import todosFromServer from './api/todos';
 import { useState } from 'react';
-
-interface ITodos {
-  id: number;
-  title: string;
-  userId: number;
-  completed: boolean;
-}
+import { mergeData } from './utils/mergeData';
 
 export const App = () => {
-  // const visibleData = preperedData(usersFromServer, todosFromServer);
-  const [dataFromServer, setDataFromServer] =
-    useState<ITodos[]>(todosFromServer);
-  // console.log('todosFromServer', todosFromServer);
-  // console.log('dataFromServer', dataFromServer);
+  const renderedData = mergeData(todosFromServer, usersFromServer);
+  const [dataTodoUsers, setDataTodoUsers] = useState(renderedData);
   const [title, setTitle] = useState<string>('');
   const [hasTitleError, setHasTitleError] = useState<boolean>(false);
 
   const [selectedUser, setSelectedUser] = useState('0');
   const [selectedUserError, setSelectedUserError] = useState<boolean>(false);
-  const [] = useState();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -40,15 +30,13 @@ export const App = () => {
 
     if (!title) {
       setHasTitleError(true);
-
-      // return;
     }
 
     if (selectedUser === '0') {
       setSelectedUserError(true);
     }
 
-    setDataFromServer(prevTodos => {
+    setDataTodoUsers(prevTodos => {
       return [
         ...prevTodos,
         {
@@ -56,24 +44,14 @@ export const App = () => {
           title: title,
           completed: false,
           userId: +selectedUser,
-          user: usersFromServer.find(x => x.id === +selectedUser),
+          user: usersFromServer.find(x => x.id === +selectedUser)!,
         },
       ];
     });
+
+    setTitle('');
+    setSelectedUser('0');
   };
-
-  // function preperedData(users: User[], todos: Todo[]): UserWithTodos[] {
-  //   const unionData = todos.map((todo: Todo) => {
-  //     return {
-  //       user: users.find((user: User) => todo.userId === user.id)!,
-  //       title: todo.title,
-  //       todoId: todo.id,
-  //       completed: todo.completed,
-  //     };
-  //   });
-
-  //   return unionData;
-  // }
 
   //action="/api/todos" method="POST"
   return (
@@ -82,16 +60,21 @@ export const App = () => {
 
       <form onSubmit={handleSubmit}>
         <div className="field">
+          <label htmlFor="title">Title:</label>
           <input
+            id="title"
             type="text"
             data-cy="titleInput"
             onChange={handleTitleChange}
+            placeholder="Enter a title"
           />
           {hasTitleError && <span className="error">Please enter a title</span>}
         </div>
 
         <div className="field">
+          <label htmlFor="user">User:</label>
           <select
+            id={'user'}
             data-cy="userSelect"
             value={selectedUser}
             onChange={handleSelectUser}
@@ -115,7 +98,7 @@ export const App = () => {
         </button>
       </form>
 
-      <TodoList dataFromServer={dataFromServer} />
+      <TodoList renderedData={dataTodoUsers} />
     </div>
   );
 };
