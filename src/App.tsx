@@ -30,10 +30,14 @@ export const App = () => {
 
     if (!title) {
       setHasTitleError(true);
+
+      return;
     }
 
     if (selectedUser === '0') {
       setSelectedUserError(true);
+
+      return;
     }
 
     setDataTodoUsers(prevTodos => {
@@ -64,6 +68,7 @@ export const App = () => {
           <input
             id="title"
             type="text"
+            value={title}
             data-cy="titleInput"
             onChange={handleTitleChange}
             placeholder="Enter a title"
